@@ -4,7 +4,7 @@ A C/C++ compiler error explainer that synthesizes verified patches using LLMs.
 
 Point it at a broken source file. It compiles it, parses every error, asks Claude
 to explain each one in plain English and produce a minimal fix, applies the patch,
-recompiles to verify it works, and reports the result — all in your terminal.
+recompiles to verify it works, and reports the result all in your terminal without having the hassle to copy/paste and ask AI to do it for you!
 
 ```
   ╔══════════════════════════════════╗
