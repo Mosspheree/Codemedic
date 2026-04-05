@@ -1,4 +1,4 @@
-# fixcc — compiler error fixer
+# codemedic — compiler error fixer
 
 A C/C++ compiler error explainer that synthesizes verified patches using LLMs.
 
@@ -8,7 +8,7 @@ recompiles to verify it works, and reports the result all in your terminal witho
 
 ```
   ╔══════════════════════════════════╗
-  ║  fixcc  — compiler error fixer  ║
+  ║  codemedic  — compiler error fixer  ║
   ╚══════════════════════════════════╝
 
   Found 3 errors. Asking Claude to fix them...
@@ -41,7 +41,7 @@ recompiles to verify it works, and reports the result all in your terminal witho
 
 ## Why it's novel
 
-Existing tools explain errors. **fixcc** explains, patches, recompiles, and
+Existing tools explain errors. **codemedic** explains, patches, recompiles, and
 verifies — closing the loop automatically. The verified recompile is the new part.
 
 ## Requirements
@@ -84,19 +84,19 @@ make -j$(nproc)
 
 ```bash
 # Basic usage
-./build/fixcc broken.cpp
+./build/codemedic broken.cpp
 
 # Auto-apply all patches without prompting (great for demos)
-./build/fixcc -y broken.cpp
+./build/codemedic -y broken.cpp
 
 # Pass compiler flags after --
-./build/fixcc broken.cpp -- -std=c++17 -I./include -Wall
+./build/codemedic broken.cpp -- -std=c++17 -I./include -Wall
 
 # Fix a C file
-./build/fixcc -c clang broken.c
+./build/codemedic -c clang broken.c
 
 # Use a different model
-./build/fixcc -m claude-opus-4-20250514 tricky.cpp
+./build/codemedic -m claude-opus-4-20250514 tricky.cpp
 ```
 
 ## Architecture
@@ -126,7 +126,7 @@ TerminalUI              colored output, spinner, apply prompt, summary
 ## Project structure
 
 ```
-fixcc/
+codemedic/
 ├── CMakeLists.txt
 ├── README.md
 ├── scripts/
@@ -170,8 +170,8 @@ cat tests/demo_bugs.cpp
 # 2. Show it fails to compile
 clang++ tests/demo_bugs.cpp
 
-# 3. Run fixcc with auto-apply
-./build/fixcc -y tests/demo_bugs.cpp
+# 3. Run codemedic with auto-apply
+./build/codemedic -y tests/demo_bugs.cpp
 
 # 4. Show it now compiles
 clang++ tests/demo_bugs.cpp && echo "Compiles cleanly."
