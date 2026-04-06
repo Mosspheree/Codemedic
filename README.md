@@ -1,4 +1,4 @@
-# codemedic — compiler error fixer
+# codemedic (compiler error fixer)
 
 A C/C++ compiler error explainer that synthesizes verified patches using LLMs.
 
