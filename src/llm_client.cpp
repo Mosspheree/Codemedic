@@ -6,7 +6,9 @@
 
 using json = nlohmann::json;
 
-// ── curl write callback ────────────────────────────────────────────────────────
+static const std::string GROQ_URL   = "https://api.groq.com/openai/v1/chat/completions";
+static const std::string GROQ_MODEL = "llama-3.3-70b-versatile";
+
 static size_t write_cb(char* ptr, size_t size, size_t nmemb, void* userdata) {
     auto* s = static_cast<std::string*>(userdata);
     s->append(ptr, size * nmemb);
@@ -23,7 +25,6 @@ std::string LLMClient::post_json(const std::string& url,
     struct curl_slist* headers = nullptr;
     headers = curl_slist_append(headers, "Content-Type: application/json");
     headers = curl_slist_append(headers, auth_header.c_str());
-    headers = curl_slist_append(headers, "anthropic-version: 2023-06-01");
 
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
@@ -108,12 +109,8 @@ std::string LLMClient::build_prompt(const Diagnostic& diag,
 Fix LLMClient::parse_llm_response(const std::string& response_body) const {
     auto j = json::parse(response_body);
 
-    // Anthropic response: j["content"][0]["text"]
     std::string text;
-    if (j.contains("content") && j["content"].is_array()) {
-        text = j["content"][0]["text"].get<std::string>();
-    } else if (j.contains("choices")) {
-        // OpenAI fallback
+    if (j.contains("choices") && j["choices"].is_array()) {
         text = j["choices"][0]["message"]["content"].get<std::string>();
     } else if (j.contains("error")) {
         throw std::runtime_error("API error: " + j["error"]["message"].get<std::string>());
@@ -121,7 +118,6 @@ Fix LLMClient::parse_llm_response(const std::string& response_body) const {
         throw std::runtime_error("Unexpected API response: " + response_body.substr(0, 200));
     }
 
-    // Strip any accidental markdown fences
     auto strip = [](std::string s) {
         auto start = s.find('{');
         auto end   = s.rfind('}');
@@ -140,25 +136,28 @@ Fix LLMClient::parse_llm_response(const std::string& response_body) const {
 }
 
 Fix LLMClient::get_fix(const Diagnostic& diag, const std::string& full_source) const {
+    // If the configured model is a Claude model, swap to Groq's Llama
+    std::string model = cfg_.model.find("claude") != std::string::npos
+                        ? GROQ_MODEL
+                        : cfg_.model;
+
     json body = {
-        {"model", cfg_.model},
+        {"model",      model},
         {"max_tokens", 2048},
-        {"system", build_system_prompt()},
         {"messages", json::array({
-            {{"role", "user"}, {"content", build_prompt(diag, full_source)}}
+            {{"role", "system"}, {"content", build_system_prompt()}},
+            {{"role", "user"},   {"content", build_prompt(diag, full_source)}}
         })}
     };
 
-    std::string auth = "x-api-key: " + cfg_.api_key;
-    std::string resp = post_json("https://api.anthropic.com/v1/messages",
-                                  body.dump(), auth);
+    std::string auth = "Authorization: Bearer " + cfg_.api_key;
+    std::string resp = post_json(GROQ_URL, body.dump(), auth);
     return parse_llm_response(resp);
 }
 
 Fix LLMClient::get_fix_streaming(const Diagnostic& diag,
                                   const std::string& full_source,
                                   std::function<void(const std::string&)> on_token) const {
-    // For now delegate to non-streaming; streaming can be added as stretch goal
     (void)on_token;
     return get_fix(diag, full_source);
 }
