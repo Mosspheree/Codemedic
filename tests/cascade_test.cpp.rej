@@ -1,0 +1,10 @@
+--- a/tests/cascade_test.cpp
++++ b/tests/cascade_test.cpp
+@@ -1,6 +1,7 @@
+ #include <iostream>
++#include <vector>
+ #include <vector>
+ 
+ /**
+ 
+ 

@@ -3,13 +3,6 @@
 #include <string>
 #include <vector>
 
-struct CompileOutput {
-    int         exit_code;
-    std::string stdout_text;
-    std::string stderr_text;
-    bool        success() const { return exit_code == 0; }
-};
-
 class CompilerRunner {
 public:
     explicit CompilerRunner(const Config& cfg) : cfg_(cfg) {}
