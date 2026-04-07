@@ -42,7 +42,7 @@ recompiles to verify it works, and reports the result all in your terminal witho
 ## Why it's novel
 
 Existing tools explain errors. **codemedic** explains, patches, recompiles, and
-verifies — closing the loop automatically. The verified recompile is the new part.
+verifies, closing the loop automatically. The verified recompile is the new part.
 
 ## Requirements
 
