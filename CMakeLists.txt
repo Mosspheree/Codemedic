@@ -16,7 +16,8 @@ find_package(Threads REQUIRED)
 include(FetchContent)
 FetchContent_Declare(
   nlohmann_json
-  URL "https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.zip"
+  URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+  # Ensure there are NO spaces at the end of the URL line above
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
