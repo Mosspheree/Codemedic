@@ -15,6 +15,11 @@ private:
     std::string build_prompt(const Diagnostic& diag, const std::string& full_source) const;
     std::string build_system_prompt() const;
     std::string post_json(const std::string& url, const std::string& body,
-                          const std::string& auth_header) const;
-    Fix parse_llm_response(const std::string& response_body) const;
+                          const std::vector<std::pair<std::string, std::string>>& headers) const;
+    Fix parse_openai_response(const std::string& response_body) const;
+    Fix parse_anthropic_response(const std::string& response_body) const;
+
+    // Provider-specific request builders
+    std::string build_openai_body(const Diagnostic& diag, const std::string& full_source) const;
+    std::string build_anthropic_body(const Diagnostic& diag, const std::string& full_source) const;
 };

@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  codemedic:
+    build: .
+    volumes:
+      - ./:/workspace
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GROQ_API_KEY=${GROQ_API_KEY:-}
+    working_dir: /workspace
+    entrypoint: ["codemedic"]
+
+  # Local Ollama for offline use
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+
+  # Codemedic with local Ollama
+  codemedic-local:
+    build: .
+    volumes:
+      - ./:/workspace
+    environment:
+      - ANTHROPIC_API_KEY=not-needed
+    depends_on:
+      - ollama
+    working_dir: /workspace
+    entrypoint: ["codemedic", "--provider", "ollama", "--provider-url", "http://ollama:11434/api/chat"]
+
+volumes:
+  ollama-models:

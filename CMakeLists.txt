@@ -1,13 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
-project(codemedic VERSION 2.0.0 LANGUAGES CXX)
+project(codemedic VERSION 3.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(LLVM REQUIRED CONFIG)
-find_package(Clang REQUIRED CONFIG)
+# Warnings
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra -Wno-unused-parameter)
+endif()
+
 find_package(CURL REQUIRED)
+find_package(Threads REQUIRED)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -28,25 +32,30 @@ set(SOURCES
   src/root_cause_analyzer.cpp
   src/git_integration.cpp
   src/batch_processor.cpp
+  src/session_logger.cpp
+  src/config_loader.cpp
 )
 
 add_executable(codemedic ${SOURCES})
 
-target_include_directories(codemedic PRIVATE
-  include
-  ${LLVM_INCLUDE_DIRS}
-  ${CLANG_INCLUDE_DIRS}
-)
+target_include_directories(codemedic PRIVATE include)
 
 target_link_libraries(codemedic PRIVATE
-  clang-cpp
-  LLVM
   CURL::libcurl
   nlohmann_json::nlohmann_json
+  Threads::Threads
 )
 
 target_compile_definitions(codemedic PRIVATE
-  ${LLVM_DEFINITIONS}
+  CODEMEDIC_VERSION="${PROJECT_VERSION}"
 )
 
 install(TARGETS codemedic DESTINATION bin)
+
+# Install shell completions (optional)
+install(FILES completions/codemedic.bash
+  DESTINATION share/bash-completion/completions
+  RENAME codemedic OPTIONAL)
+install(FILES completions/codemedic.zsh
+  DESTINATION share/zsh/site-functions
+  RENAME _codemedic OPTIONAL)

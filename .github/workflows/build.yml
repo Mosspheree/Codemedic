@@ -1,0 +1,61 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [main, develop, 'claude/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        compiler:
+          - { cc: clang,  cxx: clang++ }
+          - { cc: gcc,    cxx: g++ }
+        build_type: [Debug, Release]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake clang gcc g++ \
+            libcurl4-openssl-dev patch
+
+      - name: Configure
+        env:
+          CC: ${{ matrix.compiler.cc }}
+          CXX: ${{ matrix.compiler.cxx }}
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+
+      - name: Build
+        run: cmake --build build -j$(nproc)
+
+      - name: Verify binary
+        run: ./build/codemedic --version
+
+      - name: Upload artifact
+        if: matrix.build_type == 'Release' && matrix.compiler.cxx == 'clang++'
+        uses: actions/upload-artifact@v4
+        with:
+          name: codemedic-linux-x64
+          path: build/codemedic
+
+  docker:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t codemedic:latest .
+
+      - name: Test Docker image
+        run: docker run --rm codemedic:latest --version

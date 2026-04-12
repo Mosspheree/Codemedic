@@ -1,0 +1,33 @@
+# codemedic configuration file
+# Place in project root, or ~/.config/codemedic/config.yaml for global settings
+# CLI flags override these values.
+
+# Compiler to use (clang++, g++, clang, gcc)
+compiler: clang++
+
+# LLM provider: anthropic, openai, groq, ollama
+provider: groq
+
+# Model override (leave empty for provider default)
+# model: claude-sonnet-4-20250514
+
+# Auto-apply patches without prompting
+auto_apply: false
+
+# Also fix compiler warnings
+fix_warnings: false
+
+# Verbose output
+verbose: false
+
+# Auto-commit verified fixes to git
+git_commit: false
+
+# Session log file (leave empty to disable)
+# log_file: .codemedic-log.json
+
+# Extra compiler flags
+# compiler_flags:
+#   - -std=c++17
+#   - -Wall
+#   - -I./include

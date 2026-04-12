@@ -1,0 +1,8 @@
+build/
+.git/
+*.o
+*.bak
+*.orig
+compile_commands.json
+.vscode/
+.idea/

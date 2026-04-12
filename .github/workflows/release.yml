@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake clang \
+            libcurl4-openssl-dev patch
+
+      - name: Build Release
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j$(nproc)
+
+      - name: Package
+        run: |
+          mkdir -p dist
+          cp build/codemedic dist/
+          cp README.md dist/ 2>/dev/null || true
+          cp -r completions dist/ 2>/dev/null || true
+          tar -czf codemedic-linux-x64.tar.gz -C dist .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: codemedic-linux-x64.tar.gz
+          generate_release_notes: true
