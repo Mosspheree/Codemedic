@@ -3,3 +3,20 @@ build/
 *.bak
 *.orig
 compile_commands.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Session logs (user-generated)
+.codemedic-log.json
+
+# Docker
+.docker/

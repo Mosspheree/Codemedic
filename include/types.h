@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <optional>
+#include <chrono>
 
 // ── Diagnostic ─────────────────────────────────────────────────────────────────
 struct Diagnostic {
@@ -47,6 +48,27 @@ struct CompileOutput {
     bool success() const { return exit_code == 0; }
 };
 
+// ── LLM Provider ──────────────────────────────────────────────────────────────
+enum class LLMProvider {
+    Anthropic,   // Claude API (messages endpoint)
+    OpenAI,      // OpenAI-compatible (GPT-4, etc.)
+    Groq,        // Groq (fast Llama inference)
+    Ollama       // Local Ollama instance
+};
+
+// ── FixRecord (for session logging) ───────────────────────────────────────────
+struct FixRecord {
+    std::string file;
+    int         line         = 0;
+    std::string error_message;
+    std::string explanation;
+    std::string patch_summary;
+    bool        applied      = false;
+    bool        verified     = false;
+    double      duration_ms  = 0.0;
+    std::string timestamp;
+};
+
 // ── Config ─────────────────────────────────────────────────────────────────────
 struct Config {
     std::string source_file;
@@ -62,4 +84,21 @@ struct Config {
     bool explain_only = false;  // -e: explain errors, don't patch
     bool batch_mode   = false;  // -b: process entire directory
     bool git_commit   = false;  // -g: auto-commit verified fixes to git
+
+    // New features
+    bool json_output  = false;  // --json: machine-readable JSON output
+    bool diff_only    = false;  // --diff: preview diffs without applying
+    bool undo_mode    = false;  // --undo: restore from .bak files
+    bool show_version = false;  // --version: print version and exit
+
+    LLMProvider provider = LLMProvider::Groq;  // --provider: LLM backend
+    std::string provider_url;                   // --provider-url: custom endpoint
+
+    std::string log_file;       // --log: write fix history to JSON file
+    std::string config_file;    // --config: path to .codemedic.yaml
+
+    // Resolved provider URL (set during init)
+    std::string resolved_url() const;
+    std::string resolved_model() const;
+    std::string provider_name() const;
 };
