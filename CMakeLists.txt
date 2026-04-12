@@ -16,8 +16,7 @@ find_package(Threads REQUIRED)
 include(FetchContent)
 FetchContent_Declare(
   nlohmann_json
-  URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
-  DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  URL "https://github.com/nlohmann/json/releases/download/v3.11.3/json.zip"
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
