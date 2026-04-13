@@ -1,24 +1,19 @@
-This is free and unencumbered software released into the public domain.
+PROPRIETARY LICENSE AND COPYRIGHT NOTICE
+Copyright © 2026 Mostafa Elshabasy. All rights reserved.
 
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
+1. OWNERSHIP AND EXCLUSIVITY
+This software and all associated files (the "Software") are the sole and exclusive property of Mostafa Elshabasy. All rights, title, and interest in and to the Software, including all intellectual property rights, are and shall remain with the author.
 
-In jurisdictions that recognize copyright laws, the author or authors
-of this software dedicate any and all copyright interest in the
-software to the public domain. We make this dedication for the benefit
-of the public at large and to the detriment of our heirs and
-successors. We intend this dedication to be an overt act of
-relinquishment in perpetuity of all present and future rights to this
-software under copyright law.
+2. LIMITED PERMISSION AND EMPLOYMENT EXCEPTION
+The Software is provided in this public repository for the primary purpose of portfolio review and personal, non-commercial educational inspection.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
-ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-OTHER DEALINGS IN THE SOFTWARE.
+Exemption for Employment Evaluation: Notwithstanding the restrictions in Section 3, explicit permission is granted to hiring managers, technical recruiters, and engineers who are reviewing this Software as part of an active employment consideration process for Mostafa Elshabasy. This includes the right to download, compile, and execute the Software for the sole purpose of assessing technical competency.
 
-For more information, please refer to <https://unlicense.org>
+3. RESTRICTIONS
+Except as provided in Section 2, permission is NOT granted to any person or entity to copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software. The use of this Software for any commercial purpose, for-profit activity, or as a basis for other software products is strictly prohibited.
+
+4. PROHIBITION ON MACHINE LEARNING TRAINING
+Explicit permission is denied for this Software, including its datasets and logic, to be used as training data for artificial intelligence or machine learning models without a separate, written agreement signed by the author.
+
+5. NO WARRANTY
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
