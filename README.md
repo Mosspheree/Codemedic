@@ -3,7 +3,6 @@
   <img src="https://img.shields.io/badge/build-CMake-064F8C?logo=cmake" alt="CMake">
   <img src="https://img.shields.io/badge/docker-ready-2496ED?logo=docker" alt="Docker">
   <img src="https://img.shields.io/badge/CI-GitHub%20Actions-2088FF?logo=githubactions&logoColor=white" alt="CI">
-  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
   <img src="https://img.shields.io/badge/version-3.0.0-orange" alt="Version">
 </p>
 
