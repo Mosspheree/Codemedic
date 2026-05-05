@@ -41,7 +41,7 @@ std::string Config::resolved_url() const {
 }
 
 std::string Config::resolved_model() const {
-    if (!model.empty() && model != "claude-sonnet-4-20250514") return model;
+    if (!model.empty()) return model;
     switch (provider) {
         case LLMProvider::Anthropic: return "claude-sonnet-4-20250514";
         case LLMProvider::OpenAI:    return "gpt-4o";

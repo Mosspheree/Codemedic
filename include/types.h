@@ -74,7 +74,7 @@ struct Config {
     std::string source_file;
     std::string api_key;
     std::string compiler    = "clang++";
-    std::string model       = "claude-sonnet-4-20250514";
+    std::string model;
 
     std::vector<std::string> compiler_flags;
 
