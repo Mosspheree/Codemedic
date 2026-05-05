@@ -9,7 +9,8 @@ compiler: clang++
 provider: groq
 
 # Model override (leave empty for provider default)
-# model: claude-sonnet-4-20250514
+# model: llama-3.3-70b-versatile   # groq default
+# model: claude-sonnet-4-20250514  # anthropic
 
 # Auto-apply patches without prompting
 auto_apply: false
