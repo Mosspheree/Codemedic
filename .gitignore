@@ -18,5 +18,8 @@ Thumbs.db
 # Session logs (user-generated)
 .codemedic-log.json
 
+# Patch reject files
+*.rej
+
 # Docker
 .docker/
